@@ -149,8 +149,8 @@ export default function Dashboard() {
 
         </Toolbar>
       </AppBar>
-      <div className='text-start max-w-[1256px]  mx-auto my-3'> <span className='text-[32px] font-bold '>{localUserData().name}</span> <span className='font-semibold'>({localUserData().roleId.roleName})</span></div>
-      <div style={{ backgroundColor: "white", maxWidth: "1256px", width: "1256px", margin: "auto" }}>
+      <div className='text-start max-w-[1256px]  mx-auto my-3'> <span className='text-[28px] px-4 md:text-[32px] font-bold '>{localUserData().name}</span> <span className='font-semibold'>({localUserData().roleId.roleName})</span></div>
+      <div className='tabcss' >
         <div className="mt-4 grid grid-cols-3 p-1 bg-gray-200">
           {tabs.map((item, index) => (
             <div
@@ -167,16 +167,14 @@ export default function Dashboard() {
 
 
       </div>
-      {/* <Button onClick={() => setOpen(true)}>Create Client</Button>
-      <Button onClick={() => setopenForManager(true)}>Create Manager</Button>
- */}
+    
 
 
-      <div style={{ maxWidth: "1256px", width: "1256px", margin: "auto" }}>
+      <div style={{ maxWidth: "1256px", width: "100%", margin: "auto" }}>
         {
           activeTab == 0 && <div className='mt-3 p-6 '>
-            <div className='bg-white rounded-lg p-10'>
-              <div className='text-[30px] font-semibold text-start'>Record Attendance</div>
+            <div className='bg-white rounded-lg p-3 md:p-10'>
+              <div className='text-[28px] md:text-[30px] font-semibold text-start'>Record Attendance</div>
               <div className='max-w-[550px] mx-auto mt-7'>
                 <MarkAttendance roles={roles} client={client} employee={employee} getAllAttendance={getAllAttendance} />
               </div>
@@ -190,7 +188,7 @@ export default function Dashboard() {
 
         {
           activeTab == 1 && <div className='mt-3 px-5  py-10'>
-            <div className='bg-white rounded-lg p-10'>
+            <div className='bg-white rounded-lg p-3 md:p-10'>
               <div className='text-[30px] font-semibold text-start'>Record Employee</div>
 
               <div className='max-w-[450px] mx-auto bg-white'>
@@ -207,7 +205,7 @@ export default function Dashboard() {
 
         {
           activeTab == 2 && <div className='mt-3   py-10'>
-            <div className='bg-white rounded-lg p-10'>
+            <div className='bg-white rounded-lg p-3 md:p-10'>
               <div className='text-[30px] font-semibold text-start'>Record Client</div>
 
               <div className='max-w-[450px] mx-auto bg-white w-full'>

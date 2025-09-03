@@ -1,16 +1,57 @@
-.MuiOutlinedInput-input{
-    padding: 10px;
-}   
-.MuiSelect-outlined .MuiInputBase-input .MuiOutlinedInput-input{
+.MuiOutlinedInput-input {
     padding: 10px;
 }
 
-.tableHeader{
+.MuiSelect-outlined .MuiInputBase-input .MuiOutlinedInput-input {
+    padding: 10px;
+}
+
+.tableHeader {
     font-size: 24px;
     font-weight: 600;
 }
-.selectBox{
-    .MuiOutlinedInput-input{
+
+.selectBox {
+    .MuiOutlinedInput-input {
         padding: 8px;
-    } 
+    }
+}
+
+.tabcss {
+    background-color: white;
+    max-width: 1256px;
+    width: 100%;
+    margin: auto;
+    /* font-size: 12px; */
+}
+
+.wrapperDiv {
+    width: 50%;
+}
+.formSection{
+    display: flex;
+}
+
+@media (max-width:767px) {
+    .tabcss {
+        font-size: 14px;
+    }
+.formSection{
+    display: block;
+}
+    .wrapperDiv {
+        width: 100%;
+    }
+}
+
+@media (max-width:336px) {
+    .tabcss {
+        font-size: 11px;
+    }
+.formSection{
+    display: block;
+}
+    .wrapperDiv {
+        width: 100%;
+    }
 }
