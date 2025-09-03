@@ -24,6 +24,10 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import TextField from '@mui/material/TextField';
 import moment from 'moment';
+import { FaDownload } from "react-icons/fa";
+import { Button } from '@mui/material';
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 
 function createData(name, calories, fat, carbs, protein) {
     return { name, calories, fat, carbs, protein };
@@ -58,7 +62,7 @@ export default function AttandanceTable({ attendanceData, employee, client, getA
     const [rowsPerPage, setRowsPerPage] = React.useState(10)
     const [selectedClient, setselectedClient] = React.useState("")
     const [selectedEmployee, setselectedEmployee] = React.useState("")
-    const [selectedDate,setselectedDate]=React.useState("")
+    const [selectedDate, setselectedDate] = React.useState("")
     const tabs = ["Today", "All"]
 
     const emptyRows =
@@ -91,6 +95,7 @@ export default function AttandanceTable({ attendanceData, employee, client, getA
         const handleLastPageButtonClick = (event) => {
             onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
         };
+
 
         return (
             <Box sx={{ flexShrink: 0, ml: 2.5 }}>
@@ -126,10 +131,62 @@ export default function AttandanceTable({ attendanceData, employee, client, getA
         );
     }
     React.useEffect(() => {
-        getAllAttendance(selectedClient, selectedEmployee,selectedDate)
-    }, [selectedClient, selectedEmployee,selectedDate])
+        getAllAttendance(selectedClient, selectedEmployee, selectedDate, tab)
+    }, [selectedClient, selectedEmployee, selectedDate, tab])
     console.log(selectedClient, "selectedClient")
-    console.log("selectedData",selectedDate)
+    console.log("selectedData", selectedDate)
+    const flattenObject = (obj, parent = "", res = {}) => {
+        for (let key in obj) {
+            const propName = parent ? `${parent}.${key}` : key;
+            if (typeof obj[key] === "object" && obj[key] !== null && !Array.isArray(obj[key])) {
+                flattenObject(obj[key], propName, res);
+            } else {
+                res[propName] = obj[key];
+            }
+        }
+        return res;
+    };
+
+    // Function to flatten nested objects dynamically
+
+    const exportExcel = () => {
+        if(!attendanceData.length){
+            return 
+        }
+        // Convert JSON to worksheet
+        const flattenedData = attendanceData.map((item) => flattenObject(item));
+
+        // Convert JSON to sheet
+        const worksheet = XLSX.utils.json_to_sheet(flattenedData);
+        // const worksheet = XLSX.utils.json_to_sheet(flattenObject(attendanceData));
+
+        // Create a new workbook and append worksheet
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+        // Convert workbook to binary array
+        const excelBuffer = XLSX.write(workbook, {
+            bookType: "xlsx",
+            type: "array",
+        });
+
+        // Create Blob and trigger download
+        const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
+        saveAs(blob, `${moment().format("YYYY-MM-DD")}.xlsx`);
+    };
+
+    const debounceClick =(func,time)=>{
+        let interval =null;
+
+        return (...args)=>{
+            clearInterval(interval)
+           interval= setTimeout(() => {
+                func()
+            }, time);
+        }
+    }
+
+    const clickFunc=debounceClick(exportExcel,500)
 
     return (
         <div>
@@ -141,17 +198,18 @@ export default function AttandanceTable({ attendanceData, employee, client, getA
                             return <div className={` p-1 px-4 text-lg rounded-md ${tab == item ? "bg-white" : ""}`} onClick={() => settab(item)}><CalendarMonthIcon className='mr-2 ' />{item}</div>
                         })}
                     </div>
-                    <div>
-                        <TextField className='selectBox' type='date' onChange={(e)=>setselectedDate(e.target.value)} inputProps={{
+                    <div className='flex items-center'>
+                        <TextField className='selectBox' type='date' onChange={(e) => setselectedDate(e.target.value)} inputProps={{
                             max: moment().format("YYYY-MM-DD") // Disables dates after today
                         }} />
                         {/* <InputLabel id="employee">Employee</InputLabel> */}
                         <Select
                             labelId="employee"
                             id="demo-simple-select"
+                            value={selectedEmployee}
                             className=' p-0 text-start w-[100px] selectBox ms-3'
                             onChange={(e) => setselectedEmployee(e.target.value)}
-                        >
+                        ><MenuItem value={""}>All</MenuItem>
                             {employee.map((item) => {
                                 return <MenuItem value={item._id}>{item.name}</MenuItem>
                             })}
@@ -162,14 +220,18 @@ export default function AttandanceTable({ attendanceData, employee, client, getA
                             labelId="client"
                             id="demo-simple-select"
                             className=' p-0 text-start w-[100px] selectBox ms-3'
-
+                            value={selectedClient}
                             onChange={(e) => setselectedClient(e.target.value)}
                         >
+                            <MenuItem value={""}>All</MenuItem>
                             {/* <MenuItem value={""}>client</MenuItem> */}
                             {client.map((item) => {
                                 return <MenuItem value={item._id}>{item.name}</MenuItem>
                             })}
-                        </Select>
+                        </Select> 
+                        <div className='ml-[10px]'>
+                            <button variant='outlined' className='h-full  px-[30px] ' onClick={clickFunc}><FaDownload /></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -182,6 +244,8 @@ export default function AttandanceTable({ attendanceData, employee, client, getA
                             <TableCell align="right" className='tableHeader text-lg' sx={{ fontSize: "18px", fontWeight: "600" }} >Client Name</TableCell>
                             <TableCell align="right" sx={{ fontSize: "18px", fontWeight: "600" }}>Status</TableCell>
                             <TableCell align="right" sx={{ fontSize: "18px", fontWeight: "600" }}>Shift</TableCell>
+                            <TableCell align="right" sx={{ fontSize: "18px", fontWeight: "600" }}>Date</TableCell>
+
                             <TableCell align="right" sx={{ fontSize: "18px", fontWeight: "600" }}>Attendance Type</TableCell>
                         </TableRow>
                     </TableHead>
@@ -197,6 +261,7 @@ export default function AttandanceTable({ attendanceData, employee, client, getA
                                 <TableCell align="right">{row.clientId.name}</TableCell>
                                 <TableCell align="right" > <div ><Chip color={row.status == "present" ? "success" : "error"} label={row.status} /></div></TableCell>
                                 <TableCell align="right">{row.shift}</TableCell>
+                                <TableCell align="right">{row.date}</TableCell>
                                 <TableCell align="right">{row.AttendanceType}</TableCell>
                                 <TableCell align="right"></TableCell>
                             </TableRow>

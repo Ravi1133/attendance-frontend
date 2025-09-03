@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-export default function BasicMenu() {
+export default function BasicMenu({changeStatus,data}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -12,6 +12,11 @@ export default function BasicMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const actionFunc=(status,id)=>{
+    setAnchorEl(null);
+
+    changeStatus(status,id)
+  }
 
   return (
     <div className='text-center'>
@@ -36,7 +41,7 @@ export default function BasicMenu() {
           },
         }}
       >
-        <MenuItem onClick={handleClose}>Inactive</MenuItem>
+        <MenuItem onClick={()=>actionFunc(data.status,data._id)}>{data.status=="ACTIVE"?"INACTIVE":"ACTIVE"}</MenuItem>
       </Menu>
     </div>
   );

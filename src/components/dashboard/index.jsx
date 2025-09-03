@@ -23,6 +23,7 @@ import AttandanceTable from './AttendanceTable';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { localUserData } from '../../utils';
+import moment from 'moment';
 
 export default function Dashboard() {
   const [open, setOpen] = React.useState(false)
@@ -78,8 +79,12 @@ export default function Dashboard() {
       }
     }
   }
-  const getAllAttendance = async (selectedClient, selectedEmployee, selectedDate) => {
+  const getAllAttendance = async (selectedClient, selectedEmployee, selectedDate,tab) => {
     let body = {}
+    
+    if(tab){
+        tab=="Today"?body.date=moment().format("YYYY-MM-DD"):""
+    }
     if (selectedClient) {
       body = { ...body, clientId: selectedClient }
     }
@@ -108,7 +113,7 @@ export default function Dashboard() {
     } else {
       getAllEmployeeUserFunc()
       getAllClientFunc()
-      getAllAttendance()
+      getAllAttendance("","","","Today")
 
     }
 
@@ -194,7 +199,7 @@ export default function Dashboard() {
             </div>
 
             {userData.roleId?.roleName=="admin"&&<div className='mt-10 bg-white rounded-lg p-10'>
-              <BasicTable employee={employee} />
+              <BasicTable employee={employee} funcCallAfterUpdate={getAllEmployeeUserFunc} />
             </div>}
 
           </div>
@@ -211,7 +216,7 @@ export default function Dashboard() {
             </div>
 
             {userData.roleId?.roleName=="admin"&&<div className=' mt-10  bg-white rounded-lg p-10'>
-              <BasicClientTable client={client} />
+              <BasicClientTable client={client} funcCallAfterUpdate={getAllClientFunc} />
             </div>}
           </div>
         }

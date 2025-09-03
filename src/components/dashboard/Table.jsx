@@ -23,6 +23,8 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import BasicMenu from '../common/Menu';
+import { updateClientStatus, updateUserStatus } from '../../service/apicall';
+import { toast } from 'react-toastify';
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
 }
@@ -35,7 +37,7 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-export default function BasicTable({ employee }) {
+export default function BasicTable({ employee,funcCallAfterUpdate }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [open, setopen] = React.useState(false)
@@ -55,10 +57,21 @@ export default function BasicTable({ employee }) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+   const changeStatus = async (curstatus, id) => {
+      let statusPayload = {
+        status: curstatus == "ACTIVE" ? "INACTIVE" : "ACTIVE"
+      }
+      let update = await updateUserStatus(statusPayload, id)
+      console.log("update", update)
+      if (update.status == 200) {
+        toast.success("Updated Sucessfull")
+        funcCallAfterUpdate()
+      }
+    }
   function TablePaginationActions(props) {
     const theme = useTheme();
     const { count, page, rowsPerPage, onPageChange } = props;
-
+   
     const handleFirstPageButtonClick = (event) => {
       onPageChange(event, 0);
     };
@@ -126,6 +139,8 @@ export default function BasicTable({ employee }) {
               <TableCell align="right" sx={{ fontSize: "18px", fontWeight: "600" }}>Email</TableCell>
               <TableCell align="right" sx={{ fontSize: "18px", fontWeight: "600" }}>Address</TableCell>
               <TableCell align="right" sx={{ fontSize: "18px", fontWeight: "600" }}>Role</TableCell>
+              <TableCell align="right" sx={{ fontSize: "18px", fontWeight: "600" }}>Status</TableCell>
+
               <TableCell align="right" sx={{ fontSize: "18px", fontWeight: "600" }}>Action</TableCell>
 
             </TableRow>
@@ -143,9 +158,9 @@ export default function BasicTable({ employee }) {
                 <TableCell align="right">{row.email}</TableCell>
                 <TableCell align="right">{row.address}</TableCell>
                 <TableCell align="right">{row?.roleId?.roleName}</TableCell>
-
+                <TableCell align="right">{row?.status}</TableCell>
                 <TableCell align="right " className='relative'>
-                  <BasicMenu/>
+                  <BasicMenu changeStatus={changeStatus} data={row} />
                 </TableCell>
               </TableRow>
             ))}
