@@ -143,7 +143,7 @@ export default function Dashboard() {
         <Toolbar sx={{ width: "100%", backgroundColor: "white", color: "black", margin: "auto", display: "flex", justifyContent: "space-between" }}>
 
           <Typography sx={{ fontWeight: "bold", font: "22px" }}>Attendify</Typography>
-          <Box sx={{ display: "flex", fontWeight: "bold" }}> <Typography>{userData.roleId?.roleName?.toUpperCase()||""}</Typography>
+          <Box sx={{ display: "flex", fontWeight: "bold" }}> <Typography>{userData?.roleId?.roleName?.toUpperCase()||""}</Typography>
             <LogoutIcon onClick={logoutFunc} className='cursor-pointer' />
           </Box>
 
