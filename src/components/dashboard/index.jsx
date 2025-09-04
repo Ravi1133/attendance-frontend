@@ -149,7 +149,7 @@ export default function Dashboard() {
 
         </Toolbar>
       </AppBar>
-      <div className='text-start max-w-[1256px]  mx-auto my-3'> <span className='text-[28px] px-4 md:text-[32px] font-bold '>{localUserData().name}</span> <span className='font-semibold'>({localUserData().roleId.roleName})</span></div>
+      <div className='text-start max-w-[1256px]  mx-auto my-3'> <span className='text-[28px] px-4 md:text-[32px] font-bold '>{localUserData()?.name}</span> <span className='font-semibold'>({localUserData()?.roleId?.roleName})</span></div>
       <div className='tabcss' >
         <div className="mt-4 grid grid-cols-3 p-1 bg-gray-200">
           {tabs.map((item, index) => (
