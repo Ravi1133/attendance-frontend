@@ -69,10 +69,10 @@ export default function CreateClientMode({ setOpen }) {
                     <TextField inputRef={pincodeRef} required inputProps={{ maxLenght: 70 }} id="outlined-basic" className='w-full' name="pincode" label="Pincode" variant="outlined" />
                 </div>
                 <div className='my-2 px-5'>
-                    <TextField inputRef={mobileRef} required inputProps={{ maxLength: "10", pattern: "^[0-9]{10}$" }} id="outlined-basic" className='w-full' name="mobile" label="Mobile" variant="outlined" />
+                    <TextField inputRef={mobileRef}  inputProps={{ maxLength: "10", pattern: "^[0-9]{10}$" }} id="outlined-basic" className='w-full' name="mobile" label="Mobile" variant="outlined" />
                 </div>
                 <div className='my-2 px-5'>
-                    <TextField inputRef={emailRef} id="outlined-basic" required type='email' className='w-full' name="email" label="email" variant="outlined" inputProps={{
+                    <TextField inputRef={emailRef} id="outlined-basic"  type='email' className='w-full' name="email" label="email" variant="outlined" inputProps={{
                         pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", // Notice the double backslashes in JSX
                     }} />
                 </div>
