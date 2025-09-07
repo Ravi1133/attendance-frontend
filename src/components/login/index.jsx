@@ -12,9 +12,66 @@ import { FaRegCircleUser } from "react-icons/fa6";
 import Button from '@mui/material/Button';
 import { useState } from 'react';
 import  {useNavigate} from "react-router-dom" 
+ let stickyRoles=[
+    {
+        "permissions": {
+            "client": [
+                "create",
+                "update",
+                "delete"
+            ],
+            "manager": [
+                "create",
+                "update",
+                "delete"
+            ],
+            "employee": [
+                "create",
+                "update",
+                "delete"
+            ]
+        },
+        "_id": "688f3aff02d4f58f5dbd6a41",
+        "roleName": "admin",
+        "createdAt": "2025-08-03T10:33:35.923Z",
+        "updatedAt": "2025-08-03T10:33:35.923Z",
+        "__v": 0
+    },
+    {
+        "permissions": {
+            "client": [],
+            "manager": [
+                "update"
+            ],
+            "employee": [
+                "create",
+                "update"
+            ]
+        },
+        "_id": "688f3d1c02d4f58f5dbd6a43",
+        "roleName": "manager",
+        "createdAt": "2025-08-03T10:42:36.313Z",
+        "updatedAt": "2025-08-03T10:42:36.313Z",
+        "__v": 0
+    },
+    {
+        "permissions": {
+            "client": [],
+            "manager": [],
+            "employee": [
+                "update"
+            ]
+        },
+        "_id": "688f56226bf1aeba4d2938dc",
+        "roleName": "employee",
+        "createdAt": "2025-08-03T12:29:22.515Z",
+        "updatedAt": "2025-08-03T12:29:22.515Z",
+        "__v": 0
+    }
+]
 export default function LoginPage() {
   const [age, setAge] = React.useState('');
-  const [role, setrole] = useState("")
+  const [role, setrole] = useState(stickyRoles)
   const [roles, setRoles] = React.useState([])
   const [mobile, setmobile] = React.useState("")
   const [password, setpassword] = React.useState("")
@@ -58,6 +115,7 @@ export default function LoginPage() {
   }, [])
 
   console.log(roles, "roles")
+ 
 
   return (
     <div className=' h-[100%] flex bg-[#f1f4f9]'>

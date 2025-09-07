@@ -4,19 +4,19 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import LoginPage from './components/login'
 import { Route, Router, Routes } from 'react-router-dom'
-import  Dashboard from "./components/dashboard/index.jsx"
-import { toast,ToastContainer  } from 'react-toastify'
+import Dashboard from "./components/dashboard/index.jsx"
+import { toast, ToastContainer } from 'react-toastify'
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-    
+
       <Routes >
-          <Route path='/' element={<Dashboard/>}> </Route>
-          <Route  path='/login' element={<LoginPage/>}> </Route>
+        <Route path='/' element={<Dashboard />}> </Route>
+        <Route path='/login' element={<LoginPage />}> </Route>
       </Routes>
-        <ToastContainer position="top-right" autoClose={2000} />
+      <ToastContainer position="top-right" autoClose={2000} />
 
     </>
   )
