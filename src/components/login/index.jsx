@@ -72,7 +72,7 @@ import  {useNavigate} from "react-router-dom"
 export default function LoginPage() {
   const [age, setAge] = React.useState('');
   const [role, setrole] = useState("")
-  const [roles, setRoles] = React.useState(stickyRoles)
+  const [roles, setRoles] = React.useState([])
   const [mobile, setmobile] = React.useState("")
   const [password, setpassword] = React.useState("")
   const navigate=useNavigate()
