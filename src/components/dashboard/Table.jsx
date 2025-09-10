@@ -23,8 +23,9 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import BasicMenu from '../common/Menu';
-import { updateClientStatus, updateUserStatus } from '../../service/apicall';
+import { changePassword, updateClientStatus, updateUserStatus } from '../../service/apicall';
 import { toast } from 'react-toastify';
+import BasicModal from '../common/Modal';
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
 }
@@ -39,10 +40,24 @@ const rows = [
 
 export default function BasicTable({ employee,funcCallAfterUpdate }) {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [open, setopen] = React.useState(false)
+  const [openModel,setopenModel]=React.useState(false)
   const [anchorEl, setAnchorEl] = React.useState(null);
-
+  const [dataTobeChnage,setdataTobeChnage]=React.useState({})
+  
+  const changePasswordFunc =async(data,password)=>{
+    let payload={
+      newPassword:password,
+      userId:data._id
+    }
+    let response=await changePassword(payload)
+    console.log(response,"response change password")
+    if(response.status==200){
+      toast.success(response?.data?.message)
+      setopenModel(false)
+    }
+  }
   console.log("page", page)
   console.log("rowsPerPage", rowsPerPage)
   // Avoid a layout jump when reaching the last page with empty rows.
@@ -50,10 +65,12 @@ export default function BasicTable({ employee,funcCallAfterUpdate }) {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   const handleChangePage = (event, newPage) => {
+    debugger
     setPage(newPage);
   };
-
+  console.log("page",page)
   const handleChangeRowsPerPage = (event) => {
+    
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -65,9 +82,21 @@ export default function BasicTable({ employee,funcCallAfterUpdate }) {
       console.log("update", update)
       if (update.status == 200) {
         toast.success("Updated Sucessfull")
-        funcCallAfterUpdate()
+        let paginationData={
+          page:page,
+          pageSize:rowsPerPage
+        }
+        funcCallAfterUpdate(paginationData)
       }
     }
+    React.useEffect(() => {
+        let paginationData={
+          page:page+1,
+          pageSize:rowsPerPage
+        }
+        funcCallAfterUpdate(paginationData)
+    }, [rowsPerPage,page])
+    
   function TablePaginationActions(props) {
     const theme = useTheme();
     const { count, page, rowsPerPage, onPageChange } = props;
@@ -126,6 +155,15 @@ export default function BasicTable({ employee,funcCallAfterUpdate }) {
     setopen(false)
   }
 
+  const changePasswordModel =(data)=>{
+    setopenModel(true)
+    setdataTobeChnage(data)
+  }
+
+  const actionbtn =(password)=>{
+    changePasswordFunc(dataTobeChnage, password)
+  } 
+  
   return (
     <div>
       <p className='text-[30px] font-semibold text-start'>Employee Record</p>
@@ -146,7 +184,7 @@ export default function BasicTable({ employee,funcCallAfterUpdate }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {employee.map((row) => (
+            {employee?.userData?.map((row) => (
               <TableRow
                 key={row.name}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -160,7 +198,7 @@ export default function BasicTable({ employee,funcCallAfterUpdate }) {
                 <TableCell align="right">{row?.roleId?.roleName}</TableCell>
                 <TableCell align="right">{row?.status}</TableCell>
                 <TableCell align="right " className='relative'>
-                  <BasicMenu changeStatus={changeStatus} data={row} />
+                  <BasicMenu changeStatus={changeStatus}changePasswordModel={changePasswordModel} data={row} />
                 </TableCell>
               </TableRow>
             ))}
@@ -170,7 +208,7 @@ export default function BasicTable({ employee,funcCallAfterUpdate }) {
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                 colSpan={3}
-                count={rows.length}
+                count={employee?.pagination?.totalDocuemnt||10}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 slotProps={{
@@ -189,6 +227,8 @@ export default function BasicTable({ employee,funcCallAfterUpdate }) {
           </TableFooter>
         </Table>
       </TableContainer>
+      <BasicModal openModel={openModel} setopenModel={setopenModel}actionbtn={actionbtn}/>
+      
     </div>
   );
 }

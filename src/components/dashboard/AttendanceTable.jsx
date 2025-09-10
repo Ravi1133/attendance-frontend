@@ -210,7 +210,7 @@ export default function AttandanceTable({ attendanceData, employee, client, getA
                             className=' p-0 text-start w-[100px] selectBox ms-3'
                             onChange={(e) => setselectedEmployee(e.target.value)}
                         ><MenuItem value={""}>All</MenuItem>
-                            {employee.map((item) => {
+                            {employee?.userData?.map((item) => {
                                 return <MenuItem value={item._id}>{item.name}</MenuItem>
                             })}
                             {/* <InputLabel id="client">Client</InputLabel> */}

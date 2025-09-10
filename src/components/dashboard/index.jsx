@@ -22,7 +22,7 @@ import BasicClientTable from './ClientTable';
 import AttandanceTable from './AttendanceTable';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { localUserData } from '../../utils';
+import { getToken, localUserData } from '../../utils';
 import moment from 'moment';
 
 export default function Dashboard() {
@@ -39,6 +39,7 @@ export default function Dashboard() {
     setopenForManager(false)
   }
   console.log("activeTab", activeTab)
+  
   const getAllRolesFunc = async () => {
 
     let response = await getAllRoles()
@@ -50,21 +51,26 @@ export default function Dashboard() {
     }
   }
 
-  const getAllEmployeeUserFunc = async () => {
+  const getAllEmployeeUserFunc = async (paginationData) => {
 
     if (roles.length) {
 
-      let filterRoles = roles.filter((item) => ["employee", "manager"].includes(item.roleName))
+      let filterRoles = roles.filter((item) => ["employee", "manager"].includes(item?.roleName))
       // let query= `?roleId=${filterRoles[0]._id}` 
 
-      let query = "?page=1&pageSize=20"
+      let query = `?page=${paginationData?.page||1}&pageSize=${paginationData?.pageSize||10}`
       let payload={
-        // pageSize:20
+        // pageSize:paginationData.pageSize||10,
+        // page:paginationData.page||1
       }
+      //       let query={
+      //   pageSize:paginationData.pageSize||10,
+      //   page:paginationData.page||1
+      // }
       let data = await getAllUsers(query,payload)
       console.log(data, "data getAllUsers")
       if (data.status == 200) {
-        setemployee(data.data.userData)
+        setemployee(data.data)
       }
     }
   }
@@ -137,6 +143,7 @@ export default function Dashboard() {
   let userData=localUserData()
 
   const tabs = [{ name: "Mark Attendance", icon: AssignmentIcon }, { name: "Employee", icon: PersonAddAltIcon }, { name: "Client", icon: CalculateIcon }]
+  
   return (
     <Box sx={{ flexGrow: 1 }} className="bg-[#f1f4f9]">
       <AppBar position="static" sx={{ maxWidth: "1256px", margin: "auto" }}>

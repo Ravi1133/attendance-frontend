@@ -6,8 +6,9 @@ import { toast } from "react-toastify";
 export const axiosErrorHandler = (error, action, checkUnauthorized = true) => {
 
     const requestStatus = error?.request?.status;
-    const responseStatus = error?.response?.status;
+    const responseStatus = error?.response?.status ||error.status;
     const dataStatus = error?.data?.statusCode;
+    console.log(error,"error axios",error.status)
 
     if (dataStatus === 401 || responseStatus === 401 || requestStatus === 401) {
         // Clear local storage and redirect to /login
@@ -33,6 +34,9 @@ export const axiosErrorHandler = (error, action, checkUnauthorized = true) => {
                 error?.response?.data?.message || error?.response?.data?.data || error?.data?.message,
             );
     }
+    if(responseStatus==500){
+        toast.error(error?.response?.data?.message)
+    }
     if (
         checkUnauthorized &&
         (dataStatus === 409 || responseStatus === 409 || requestStatus === 409)
@@ -53,5 +57,6 @@ export const axiosErrorHandler = (error, action, checkUnauthorized = true) => {
 
     if (error?.response) return error.response;
     else if (error?.request) return error.request;
+    else if(error?.response?.message)return error?.response?.message
     else return error?.message;
 };

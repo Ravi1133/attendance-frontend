@@ -15,7 +15,7 @@ export default function MarkAttendance({ client, employee, getAllAttendance }) {
     const [shift, setshift] = useState("")
     const [selectedClient, setselectedClient] = useState("")
 
-
+    console.log("employee",employee)
     const submitHandler = async (e) => {
         debugger
         e.preventDefault()
@@ -72,7 +72,7 @@ export default function MarkAttendance({ client, employee, getAllAttendance }) {
                                 // label="Age"
                                 // onChange={handleChange}
                                 >
-                                    {employee?.map((item) => {
+                                    {employee?.userData?.map((item) => {
                                         return <MenuItem value={item._id}>{item.name}</MenuItem>
                                     })}
                                 </Select>

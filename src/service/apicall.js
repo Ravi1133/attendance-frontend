@@ -2,7 +2,7 @@
 import axios from "axios"
 import { axiosErrorHandler } from "../utils/axiosErrorHandler"
 import { getToken } from "../utils"
-// let baseURL = "http://localhost:5007"
+// let baseURL = "http://localhost:3000"
 let baseURL = "https://api.shovel.co.in"
 
 
@@ -38,6 +38,19 @@ export const getAllUsers = async (query, data) => {
             data
         }).catch(axiosErrorHandler)
         return loginResponse
+    } catch (err) {
+        console.log("err", err)
+    }
+}
+export const changePassword = async ( data) => {
+    try {
+        let response = await axios({
+            method: "post",
+            url: baseURL + "/user/changePassword",
+            headers: { Authorization: `Bearer ${getToken()}` },
+            data
+        }).catch(axiosErrorHandler)
+        return response
     } catch (err) {
         console.log("err", err)
     }

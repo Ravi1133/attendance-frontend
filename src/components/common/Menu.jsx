@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-export default function BasicMenu({changeStatus,data}) {
+export default function BasicMenu({changeStatus,data,changePasswordModel,setopenModel}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -42,6 +42,8 @@ export default function BasicMenu({changeStatus,data}) {
         }}
       >
         <MenuItem onClick={()=>actionFunc(data.status,data._id)}>{data.status=="ACTIVE"?"INACTIVE":"ACTIVE"}</MenuItem>
+        <MenuItem onClick={()=>changePasswordModel(data)}>Change Password</MenuItem>
+      
       </Menu>
     </div>
   );

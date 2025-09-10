@@ -69,6 +69,30 @@ import  {useNavigate} from "react-router-dom"
         "__v": 0
     }
 ]
+
+
+  const myObject={
+    name:"ravikant",
+    age:"29"
+  }
+  const handlerFunction={
+    get:function (target,props,receiver) {
+        console.log(target,"target")
+        console.log(props,"props")
+        console.log(receiver,"receiver")
+        return target[props]
+    }
+  }
+
+ let proxyObject= new Proxy(myObject,handlerFunction)
+ console.log(proxyObject,"proxyObject")
+
+ let arr=[1,2,3,4,5,6]
+ let arr2=[7,8,9,10]
+ console.log("concat",arr.concat(arr2))
+ console.log(arr.slice(),"slice")
+ let obj={a:"a",b:"b",c:"c"}
+ console.log(Object.assign({r:"r",d:"d"},obj,{s:"s",t:"t"}),"assign")
 export default function LoginPage() {
   const [age, setAge] = React.useState('');
   const [role, setrole] = useState("")

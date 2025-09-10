@@ -8,6 +8,6 @@ export default defineConfig({
   server:{
     host:"0.0.0.0",
     port:5173,
-     allowedHosts: ['shovel.co.in']
+     allowedHosts: ['shovel.co.in',"attendify.shovel.co.in"]
   }
 })
