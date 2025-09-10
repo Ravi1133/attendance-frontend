@@ -37,7 +37,7 @@ export default function CreateEmployee({ setopenForManager, roles, employee,getA
         let response = await createUser(payload)
         console.log("response", response)
 
-        if (response?.data?.message) {
+        if (response.status==200) {
             toast.success("Added successfull")
             setstate(initialState)
             getAllEmployeeUserFunc()
@@ -67,7 +67,7 @@ export default function CreateEmployee({ setopenForManager, roles, employee,getA
                 id="demo-simple-select"
                 // value={age}
                 label="Role"
-
+                value={state.roleId}
                 className='w-full text-start'
                 onChange={(e) => setstate((state) => { return { ...state, roleId: e.target.value } })}
             >
@@ -87,22 +87,22 @@ export default function CreateEmployee({ setopenForManager, roles, employee,getA
                 <Typography fontSize={22} className=' text-center p-4'>Add Employee</Typography>
 
                 <div className='my-2 w-full px-5' >
-                    <TextField required id="outlined-basic" onChange={(e) => setstate((state) => { return { ...state, [e.target.name]: e.target.value } })} className='w-full' name="name" label="Name" variant="outlined" />
+                    <TextField required id="outlined-basic" value={state.name} onChange={(e) => setstate((state) => { return { ...state, [e.target.name]: e.target.value } })} className='w-full' name="name" label="Name" variant="outlined" />
                 </div>
                 {userData.roleId.roleName=="admin"&&<div className='my-2 w-full px-5' >
                     <RoleDiv/>
                 </div>}
                 <div className='my-2 px-5'>
-                    <TextField  id="outlined-basic" onChange={(e) => setstate((state) => { return { ...state, [e.target.name]: e.target.value } })} className='w-full' name="address" label="Address" variant="outlined" />
+                    <TextField  id="outlined-basic" value={state.address} onChange={(e) => setstate((state) => { return { ...state, [e.target.name]: e.target.value } })} className='w-full' name="address" label="Address" variant="outlined" />
                 </div>
                 <div className='my-2 px-5'>
-                    <TextField  id="outlined-basic" onChange={(e) => setstate((state) => { return { ...state, [e.target.name]: e.target.value } })} className='w-full' name="adhar" label="Adhar" variant="outlined" inputProps={{ maxLength: "12" }} />
+                    <TextField  id="outlined-basic" value={state.adhar} onChange={(e) => setstate((state) => { return { ...state, [e.target.name]: e.target.value } })} className='w-full' name="adhar" label="Adhar" variant="outlined" inputProps={{ maxLength: "12" }} />
                 </div>
                 <div className='my-2 px-5'>
-                    <TextField required id="outlined-basic" onChange={(e) => setstate((state) => { return { ...state, [e.target.name]: e.target.value } })} className='w-full' inputProps={{ maxLength: "10", pattern: "^[0-9]{10}$" }} name="mobile" label="Mobile" variant="outlined" />
+                    <TextField required id="outlined-basic" value={state.mobile} onChange={(e) => setstate((state) => { return { ...state, [e.target.name]: e.target.value } })} className='w-full' inputProps={{ maxLength: "10", pattern: "^[0-9]{10}$" }} name="mobile" label="Mobile" variant="outlined" />
                 </div>
                 <div className='my-2 px-5'>
-                    <TextField type='email'  id="outlined-basic" onChange={(e) => setstate((state) => { return { ...state, [e.target.name]: e.target.value } })} className='w-full' name="email" inputProps={{
+                    <TextField type='email'  id="outlined-basic" value={state.email} onChange={(e) => setstate((state) => { return { ...state, [e.target.name]: e.target.value } })} className='w-full' name="email" inputProps={{
                         pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", // Notice the double backslashes in JSX
                     }} label="email" variant="outlined" />
                 </div>

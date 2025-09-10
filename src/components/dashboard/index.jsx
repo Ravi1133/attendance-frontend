@@ -149,7 +149,7 @@ export default function Dashboard() {
       <AppBar position="static" sx={{ maxWidth: "1256px", margin: "auto" }}>
         <Toolbar sx={{ width: "100%", backgroundColor: "white", color: "black", margin: "auto", display: "flex", justifyContent: "space-between" }}>
 
-          <Typography sx={{ fontWeight: "bold", font: "22px" }}>Attendify</Typography>
+          <Typography sx={{ fontWeight: "bold", font: "22px" }} className='flex items-center'><img src={"public/logo.jpeg"} className='w-[40px]' /> Attendify</Typography>
           <Box sx={{ display: "flex", fontWeight: "bold" }}> <Typography>{userData?.roleId?.roleName?.toUpperCase()||""}</Typography>
             <LogoutIcon onClick={logoutFunc} className='cursor-pointer' />
           </Box>
