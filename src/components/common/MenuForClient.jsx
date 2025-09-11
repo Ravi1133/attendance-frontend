@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-export default function MenuForClient({data,editClient,seteditClient}) {
+export default function MenuForClient({changeStatus,data,editClient,seteditClient}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -13,6 +13,7 @@ export default function MenuForClient({data,editClient,seteditClient}) {
     setAnchorEl(null);
   };
   const actionFunc=(status,id)=>{
+    
     setAnchorEl(null);
     changeStatus(status,id)
   }

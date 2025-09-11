@@ -29,6 +29,7 @@ const rows = [
 export default function BasicClientTable({ client,funcCallAfterUpdate,editClient ,seteditClient}) {
 
 const changeStatus = async (curstatus,id) => {
+  debugger
   let statusPayload={
     status:curstatus=="ACTIVE"?"INACTIVE":"ACTIVE"
   }
@@ -68,7 +69,7 @@ const changeStatus = async (curstatus,id) => {
                 <TableCell align="right">{row.email}</TableCell>
                 <TableCell align="right">{row.address}</TableCell>
                 <TableCell align="right">{row.GST || "na"}</TableCell>
-                <TableCell align="right" className=''><Button variant='contained' onClick={()=>changeStatus(row.status, row._id)}> {row.status}</Button> <MenuForClient data={row} editClient={editClient} seteditClient={seteditClient}  /></TableCell>
+                <TableCell align="right" className=''><MenuForClient changeStatus={changeStatus} data={row} editClient={editClient} seteditClient={seteditClient}  /></TableCell>
 
               </TableRow>
             ))}
