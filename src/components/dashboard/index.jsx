@@ -216,7 +216,7 @@ export default function Dashboard() {
               <div className='text-[30px] font-semibold text-start'>Record Client</div>
 
               <div className='max-w-[450px] mx-auto bg-white w-full'>
-                <CreateClientMode setClose={setOpen} roles={roles}></CreateClientMode>
+                <CreateClientMode setClose={setOpen} roles={roles} funcCallAfterUpdate={getAllClientFunc}></CreateClientMode>
               </div>
             </div>
 

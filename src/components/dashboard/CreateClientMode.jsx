@@ -5,7 +5,7 @@ import React, { useRef, useState } from 'react'
 import { createClient } from '../../service/apicall'
 import { toast } from 'react-toastify'
 
-export default function CreateClientMode({ setOpen }) {
+export default function CreateClientMode({ setOpen,funcCallAfterUpdate }) {
     const nameRef = useRef(null)
     const addressRef = useRef(null)
     const mobileRef = useRef(null)
@@ -46,6 +46,7 @@ export default function CreateClientMode({ setOpen }) {
             let data = await createClient(payload)
             console.log("data", data)
             if (data.status == 200) {
+                funcCallAfterUpdate()
                 toast.success("Added Success")
                 resetFunction()
             }
@@ -66,13 +67,13 @@ export default function CreateClientMode({ setOpen }) {
                     <TextField inputRef={addressRef} required inputProps={{ maxLenght: 70 }} id="outlined-basic" className='w-full' name="address" label="Address" variant="outlined" />
                 </div>
                 <div className='my-2 px-5'>
-                    <TextField inputRef={pincodeRef} required inputProps={{ maxLenght: 70 }} id="outlined-basic" className='w-full' name="pincode" label="Pincode" variant="outlined" />
+                    <TextField inputRef={pincodeRef} required inputProps={{ maxLength: "6" }} id="outlined-basic" className='w-full' name="pincode" label="Pincode" variant="outlined" />
                 </div>
                 <div className='my-2 px-5'>
                     <TextField inputRef={mobileRef}  inputProps={{ maxLength: "10", pattern: "^[0-9]{10}$" }} id="outlined-basic" className='w-full' name="mobile" label="Mobile" variant="outlined" />
                 </div>
                 <div className='my-2 px-5'>
-                    <TextField inputRef={emailRef} id="outlined-basic"  type='email' className='w-full' name="email" label="email" variant="outlined" inputProps={{
+                    <TextField inputRef={emailRef} required id="outlined-basic"  type='email' className='w-full' name="email" label="email" variant="outlined" inputProps={{
                         pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", // Notice the double backslashes in JSX
                     }} />
                 </div>
