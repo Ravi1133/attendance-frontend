@@ -32,7 +32,9 @@ export default function Dashboard() {
   const [roles, setRoles] = React.useState([])
   const [employee, setemployee] = React.useState([])
   const [client, setclient] = React.useState([])
+  const [editClient, seteditClient] = React.useState({})
   const [attendanceData, setattendanceData] = React.useState([])
+  const [editEmployee,seteditEmployee]=React.useState({})
   const navigate = useNavigate()
   const handleClose = () => {
     setOpen(false)
@@ -141,6 +143,10 @@ export default function Dashboard() {
   }
 
   let userData=localUserData()
+  const editFunction =(data)=>{
+    // editEmployee(data)
+    seteditEmployee(data)
+  }
 
   const tabs = [{ name: "Mark Attendance", icon: AssignmentIcon }, { name: "Employee", icon: PersonAddAltIcon }, { name: "Client", icon: CalculateIcon }]
   
@@ -199,12 +205,12 @@ export default function Dashboard() {
               <div className='text-[30px] font-semibold text-start'>Record Employee</div>
 
               <div className='max-w-[450px] mx-auto bg-white'>
-                <CreateEmployee setClose={setOpen} roles={roles} getAllEmployeeUserFunc={getAllEmployeeUserFunc} ></CreateEmployee>
+                <CreateEmployee setClose={setOpen} roles={roles} getAllEmployeeUserFunc={getAllEmployeeUserFunc} editEmployee={editEmployee} seteditEmployee={seteditEmployee}></CreateEmployee>
               </div>
             </div>
 
             {userData.roleId?.roleName=="admin"&&<div className='mt-10 bg-white rounded-lg p-10'>
-              <BasicTable employee={employee} funcCallAfterUpdate={getAllEmployeeUserFunc} />
+              <BasicTable employee={employee} funcCallAfterUpdate={getAllEmployeeUserFunc}editFunction={editFunction} />
             </div>}
 
           </div>
@@ -216,12 +222,12 @@ export default function Dashboard() {
               <div className='text-[30px] font-semibold text-start'>Record Client</div>
 
               <div className='max-w-[450px] mx-auto bg-white w-full'>
-                <CreateClientMode setClose={setOpen} roles={roles} funcCallAfterUpdate={getAllClientFunc}></CreateClientMode>
+                <CreateClientMode setClose={setOpen} roles={roles} funcCallAfterUpdate={getAllClientFunc} seteditClient={seteditClient} editClient={editClient}></CreateClientMode>
               </div>
             </div>
 
             {userData.roleId?.roleName=="admin"&&<div className=' mt-10  bg-white rounded-lg p-10'>
-              <BasicClientTable client={client} funcCallAfterUpdate={getAllClientFunc} />
+              <BasicClientTable client={client} funcCallAfterUpdate={getAllClientFunc} editClient={editClient} seteditClient={seteditClient}  />
             </div>}
           </div>
         }

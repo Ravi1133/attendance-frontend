@@ -10,6 +10,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import Button from '@mui/material/Button';
 import { updateClientStatus } from '../../service/apicall';
 import { toast } from 'react-toastify';
+import MenuForClient from '../common/MenuForClient';
 
 
 function createData(name, calories, fat, carbs, protein) {
@@ -25,7 +26,8 @@ const rows = [
 ];
 
 
-export default function BasicClientTable({ client,funcCallAfterUpdate }) {
+export default function BasicClientTable({ client,funcCallAfterUpdate,editClient ,seteditClient}) {
+
 const changeStatus = async (curstatus,id) => {
   let statusPayload={
     status:curstatus=="ACTIVE"?"INACTIVE":"ACTIVE"
@@ -66,7 +68,8 @@ const changeStatus = async (curstatus,id) => {
                 <TableCell align="right">{row.email}</TableCell>
                 <TableCell align="right">{row.address}</TableCell>
                 <TableCell align="right">{row.GST || "na"}</TableCell>
-                <TableCell align="right" className=''><Button variant='contained' onClick={()=>changeStatus(row.status, row._id)}> {row.status}</Button></TableCell>
+                <TableCell align="right" className=''><Button variant='contained' onClick={()=>changeStatus(row.status, row._id)}> {row.status}</Button> <MenuForClient data={row} editClient={editClient} seteditClient={seteditClient}  /></TableCell>
+
               </TableRow>
             ))}
           </TableBody>

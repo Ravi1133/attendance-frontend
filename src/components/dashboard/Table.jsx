@@ -38,7 +38,7 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-export default function BasicTable({ employee,funcCallAfterUpdate }) {
+export default function BasicTable({ employee,funcCallAfterUpdate,editFunction }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [open, setopen] = React.useState(false)
@@ -198,7 +198,7 @@ export default function BasicTable({ employee,funcCallAfterUpdate }) {
                 <TableCell align="right">{row?.roleId?.roleName}</TableCell>
                 <TableCell align="right">{row?.status}</TableCell>
                 <TableCell align="right " className='relative'>
-                  <BasicMenu changeStatus={changeStatus}changePasswordModel={changePasswordModel} data={row} />
+                  <BasicMenu changeStatus={changeStatus}changePasswordModel={changePasswordModel} editFunction={editFunction} data={row} />
                 </TableCell>
               </TableRow>
             ))}

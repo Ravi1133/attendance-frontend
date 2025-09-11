@@ -28,6 +28,15 @@ export const createUser = async (data) => {
         console.log("err", err)
     }
 }
+export const updateUser = async (data ,id) => {
+    try {
+        let loginResponse = await axios.put(baseURL +`/user/updateUser/${id}`, data).catch(axiosErrorHandler)
+        return loginResponse
+    } catch (err) {
+        console.log("err", err)
+    }
+}
+
 
 export const getAllUsers = async (query, data) => {
     try {
@@ -64,6 +73,16 @@ export const createClient = async (data) => {
         console.log("err", err)
     }
 }
+
+export const updateClient = async (data,id) => {
+    try {
+        let loginResponse = await axios.put(baseURL + `/user/updateClient/${id}`, data).catch(axiosErrorHandler)
+        return loginResponse
+    } catch (err) {
+        console.log("err", err)
+    }
+}
+
 export const updateClientStatus = async (data,id) => {
     try {
         let loginResponse = await axios.post(baseURL + `/user/updateClientStatus/${id}`, data).catch(axiosErrorHandler)

@@ -2,7 +2,7 @@ import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import React, { useEffect, useState } from 'react'
-import { createUser } from '../../service/apicall'
+import { createUser, updateUser } from '../../service/apicall'
 import { toast } from 'react-toastify'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
@@ -18,13 +18,15 @@ let initialState={
         roleId: "",
         adhar: ""
     }
-export default function CreateEmployee({ setopenForManager, roles, employee,getAllEmployeeUserFunc }) {
+export default function CreateEmployee({ setopenForManager, roles, employee,getAllEmployeeUserFunc,editEmployee,seteditEmployee }) {
     const [state, setstate] = useState(initialState)
     console.log("state", state)
     let filterRoles = roles.filter((item) => item.roleName == "employee")
     console.log("filterRoles", filterRoles)
     console.log("role", roles)
+    console.log("editEmployee",editEmployee)
     const createUserFunc = async (data) => {
+        debugger
         let payload = {
             name: state.name,
             roleId: state.roleId || filterRoles[0]._id,
@@ -32,13 +34,23 @@ export default function CreateEmployee({ setopenForManager, roles, employee,getA
             email: state.email,
             address: state.address,
             adhar: state.adhar,
-            pincode: "110044"
+            pincode: state.pincode
         }
-        let response = await createUser(payload)
+        let response;
+        let toasMessage=""
+        if(!editEmployee._id){
+
+            response = await createUser(payload)
+            toasMessage="Added successfull"
+        }else{
+            response=await updateUser(payload,state._id)
+            toasMessage="Updated successfull"
+
+        }
         console.log("response", response)
 
         if (response.status==200) {
-            toast.success("Added successfull")
+            toast.success(toasMessage)
             setstate(initialState)
             getAllEmployeeUserFunc()
         } else {
@@ -47,16 +59,27 @@ export default function CreateEmployee({ setopenForManager, roles, employee,getA
 
     }
 
+    const UpdateState=()=>{
+        if(editEmployee?.roleId){
+            setstate({...editEmployee,roleId:editEmployee.roleId._id})
+        }
+    }
     useEffect(() => {
         // toast.error("Added successfull")
-    }, [])
+        UpdateState()
+    }, [editEmployee])
 
     const submitHandle = (e) => {
         debugger
         e.preventDefault()
+        
         createUserFunc()
     }
     let userData = localUserData()
+    let eraseData=()=>{
+        seteditEmployee({})
+        setstate(initialState)
+    }
 
     const  RoleDiv = () => {
         // let rolesArr=roles.filter((item)=>item.roleName)
@@ -108,6 +131,7 @@ export default function CreateEmployee({ setopenForManager, roles, employee,getA
                 </div>
                 <div className='px-5 my-3' style={{ display: "flex", justifyContent: "center" }}>
                     <Button type='submit' variant="contained" className='mx-auto'>Submit</Button>
+                    <Button variant="contained" style={{marginLeft:"10px"}} className='mx-auto' onClick={eraseData}>Clear</Button>
                     {/* <Button variant="contained" className='mx-auto' sx={{ marginLeft: "20px" }} onClick={() => setopenForManager(false)}>Close</Button> */}
                 </div>
             </form>
