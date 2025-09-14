@@ -133,7 +133,7 @@ export default function CreateClientMode({ setOpen, funcCallAfterUpdate, editCli
           />
         </div>
 
-        <div className='my-2 px-5'>
+        {/* <div className='my-2 px-5'>
           <TextField
             required
             value={formData.email}
@@ -147,9 +147,9 @@ export default function CreateClientMode({ setOpen, funcCallAfterUpdate, editCli
               pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
             }}
           />
-        </div>
+        </div> */}
 
-        <div className='my-2 px-5'>
+        {/* <div className='my-2 px-5'>
           <TextField
             value={formData.gst}
             onChange={handleChange}
@@ -161,7 +161,7 @@ export default function CreateClientMode({ setOpen, funcCallAfterUpdate, editCli
               pattern: "^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$",
             }}
           />
-        </div>
+        </div> */}
 
         <div className='px-5 my-3 flex justify-center'>
           <Button variant="contained" type='submit'>Submit</Button>

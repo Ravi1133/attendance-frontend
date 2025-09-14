@@ -2,8 +2,8 @@
 import axios from "axios"
 import { axiosErrorHandler } from "../utils/axiosErrorHandler"
 import { getToken } from "../utils"
-// let baseURL = "http://localhost:3000"
-let baseURL = "https://api.shovel.co.in"
+let baseURL = "http://localhost:3000"
+// let baseURL = "https://api.shovel.co.in"
 
 
 export const getAllRoles = async () => {

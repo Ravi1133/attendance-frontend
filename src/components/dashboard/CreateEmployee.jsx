@@ -118,17 +118,17 @@ export default function CreateEmployee({ setopenForManager, roles, employee,getA
                 <div className='my-2 px-5'>
                     <TextField  id="outlined-basic" value={state.address} onChange={(e) => setstate((state) => { return { ...state, [e.target.name]: e.target.value } })} className='w-full' name="address" label="Address" variant="outlined" />
                 </div>
-                <div className='my-2 px-5'>
+                {/* <div className='my-2 px-5'>
                     <TextField  id="outlined-basic" value={state.adhar} onChange={(e) => setstate((state) => { return { ...state, [e.target.name]: e.target.value } })} className='w-full' name="adhar" label="Adhar" variant="outlined" inputProps={{ maxLength: "12" }} />
-                </div>
+                </div> */}
                 <div className='my-2 px-5'>
                     <TextField required id="outlined-basic" value={state.mobile} onChange={(e) => setstate((state) => { return { ...state, [e.target.name]: e.target.value } })} className='w-full' inputProps={{ maxLength: "10", pattern: "^[0-9]{10}$" }} name="mobile" label="Mobile" variant="outlined" />
                 </div>
-                <div className='my-2 px-5'>
+                {/* <div className='my-2 px-5'>
                     <TextField type='email'  id="outlined-basic" value={state.email} onChange={(e) => setstate((state) => { return { ...state, [e.target.name]: e.target.value } })} className='w-full' name="email" inputProps={{
                         pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", // Notice the double backslashes in JSX
                     }} label="email" variant="outlined" />
-                </div>
+                </div> */}
                 <div className='px-5 my-3' style={{ display: "flex", justifyContent: "center" }}>
                     <Button type='submit' variant="contained" className='mx-auto'>Submit</Button>
                     <Button variant="contained" style={{marginLeft:"10px"}} className='mx-auto' onClick={eraseData}>Clear</Button>

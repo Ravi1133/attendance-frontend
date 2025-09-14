@@ -99,6 +99,7 @@ export default function LoginPage() {
   const [roles, setRoles] = React.useState([])
   const [mobile, setmobile] = React.useState("")
   const [password, setpassword] = React.useState("")
+  const [name,setName]=React.useState("")
   const navigate=useNavigate()
 
   const handleChange = (event) => {
@@ -140,9 +141,13 @@ export default function LoginPage() {
 
   console.log(roles, "roles")
  
-
+  const ChileCompone=React.memo(({name})=>{
+    console.log("inside child Component")
+    return <div>Name is {name}</div>
+  })
   return (
     <div className=' h-[100%] flex bg-[#f1f4f9]'>
+      
     <Box className="bg-white rounded-lg" sx={{ maxWidth:700,width:500, minWidth: 240,height:430, padding: "30px",margin:"auto" }}>
       <div className=''> <FaRegCircleUser size={55} className='mx-auto' /></div>
       <p className='text-[28px] font-semibold'>Welcome to Attendify</p>
