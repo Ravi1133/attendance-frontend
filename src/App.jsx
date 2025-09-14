@@ -6,7 +6,7 @@ import LoginPage from './components/login'
 import { Route, Router, Routes } from 'react-router-dom'
 import Dashboard from "./components/dashboard/index.jsx"
 import { toast, ToastContainer } from 'react-toastify'
-import Test from './Test.jsx'
+
 function App() {
   const [count, setCount] = useState(0)
   
